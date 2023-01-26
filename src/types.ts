@@ -10,8 +10,8 @@ export type TProduct = {
 
     id:string,
     name:string,
-    price:number
-    category:string
+    price:number,
+    category:Categorias
 }
 
 //É a compra realizada por cliente.
@@ -20,4 +20,11 @@ export type TPurchase = {
     productId:string,
     quantity: number,
     totalPrice:number
+}
+
+
+export enum Categorias {
+    MONITORES = "MONITORES",
+    PERIFERICOS = "PERIFERICOS",
+    PECAS = "PEÇAS"
 }
