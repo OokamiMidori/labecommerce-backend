@@ -74,3 +74,78 @@ app.post("/purchases", (req: Request, res: Response) => {
 
     res.status(201).send("Compra realizada com sucesso")
 })
+
+app.get("/products/:id", (req: Request, res: Response) => {
+    let id = req.params.id
+    const result = products.find((product) => product.id === id)
+    res.status(200).send(result)
+})
+
+app.get("/users/:id/purchases", (req: Request, res: Response) => {
+    const id = req.params.id
+    const result = getAllPurchasesFromUserId(id)
+    res.status(200).send(result)
+})
+
+app.delete("/users/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+    const indexToRemove = users.findIndex((user) => user.id === id)
+    if (indexToRemove) {
+        users.splice(indexToRemove, 1)
+    }
+
+    res.status(200).send("Usuário deletado com sucesso")
+})
+
+app.delete("/products/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const indexToRemove = products.findIndex((product) => product.id === id)
+    if (indexToRemove) {
+        products.splice(indexToRemove, 1)
+    }
+    res.status(200).send("Produto deletado com sucesso")
+})
+
+app.put("/users/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const newId = req.body.id as string | undefined
+    const newEmail = req.body.email as string | undefined
+    const newPassword = req.body.password as string | undefined
+
+    const userToEdit = users.find((user) => {
+        return user.id === id
+    })
+
+    if (userToEdit) {
+        userToEdit.id = newId || userToEdit.id
+        userToEdit.email = newEmail || userToEdit.email
+        userToEdit.password = newPassword || userToEdit.password
+    }
+
+    res.status(200).send("Cadastro atualizado com sucesso")
+})
+
+app.put("/products/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const newId = req.body.id as string | undefined
+    const newName = req.body.name as string | undefined
+    const newPrice = req.body.price as number | undefined
+    const newCategory = req.body.category as Categorias | undefined
+
+    const productToEdit = products.find((product) => {
+        return product.id === id
+    })
+
+    if (productToEdit) {
+        productToEdit.id = newId || productToEdit.id
+        productToEdit.name = newName || productToEdit.name
+        productToEdit.price = isNaN(newPrice) ? productToEdit.price : newPrice
+        productToEdit.category = newCategory || productToEdit.category
+    }
+
+    res.status(200).send("Produto atualizado com sucesso")
+
+})
