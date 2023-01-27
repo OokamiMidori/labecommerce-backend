@@ -79,36 +79,20 @@ export function getAllProducts(): TProduct[] {
     return products
 }
 
-export function getProductById(idToSearch: string): TProduct {
-    let product: TProduct = {
-        id: "",
-        name: "",
-        price: 0,
-        category: Categorias.PECAS
-    }
-    products.map((item: TProduct) => {
-        if (item.id = idToSearch) {
-            product = item
+export function getProductById(idToSearch: string) {
+    return products.filter(
+        (products: TProduct) => {
+            return products.id === idToSearch
         }
-    }
     )
-
-    return product
 }
 
-export function queryProductsByName(q: string): TProduct {
-    let item = {
-        id: "",
-        name: "",
-        price: 0,
-        category: Categorias.PECAS
-    }
-    products.map((product) => {
-        if (product.name = q) {
-            item = product
+export function queryProductsByName(nameToSearch: string) {
+    return products.filter(
+        (products: TProduct) => {
+            return products.name === nameToSearch
         }
-    })
-    return item
+    )
 }
 
 export function createPurchase(userId: string, productId: string, quantity: number, totalPrice: number): string {
@@ -123,9 +107,9 @@ export function createPurchase(userId: string, productId: string, quantity: numb
 }
 
 export function getAllPurchasesFromUserId(userIdToSearch: string): TPurchase | any[] {
-    let purchasesUser: TPurchase[] = []
+    const purchasesUser: TPurchase[] = []
     purchases.map((purchase) => {
-        if (purchase.userId = userIdToSearch) {
+        if (purchase.userId === userIdToSearch) {
             purchasesUser.push(purchase)
         }
     })
