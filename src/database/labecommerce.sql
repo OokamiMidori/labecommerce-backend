@@ -66,3 +66,24 @@ SELECT * FROM products
 WHERE price >= 100
 AND price <= 300
 ORDER BY price ASC;
+
+CREATE TABLE purchases(
+    id TEXT UNIQUE PRIMARY KEY NOT NULL,
+    total_price REAL NOT NULL,
+    paid INTEGER NOT NULL,
+    delivered_at TEXT,
+    buyer_id TEXT NOT NULL,
+    FOREIGN KEY (buyer_id) REFERENCES users(id)
+);
+
+INSERT INTO purchases (id,total_price,paid,delivered_at,buyer_id)
+VALUES("pu001", 200, 0, NULL, "u001"),
+("pu002", 1000, 0, NULL, "u001"),
+("pu003", 400, 0, NULL, "u002"),
+("pu004", 1200, 0, NULL, "u123"),
+("pu005", 800, 0, NULL, "u002"),
+("pu006", 300, 0, NULL, "u123");
+
+SELECT * FROM purchases
+INNER JOIN users
+ON purchases.buyer_id = users.id;
