@@ -24,3 +24,45 @@ VALUES("p001", "Monitor HD", 800, "MONITORES"),
 ("p003", "Teclado Mecanico", 300, "PERIFERICOS"),
 ("p004","SSD 120GB", 130, "PECAS"),
 ("p005","Monitor LED", 1000, "MONITORES");
+
+SELECT * FROM users;
+
+SELECT * FROM products;
+
+SELECT * FROM products
+WHERE name LIKE "monitor%";
+
+INSERT INTO users (id,email,password)
+VALUES("u004","salzita@email.com","salepimenta");
+
+INSERT INTO products (id,name,price,category)
+VALUES("p006","Memoria DDR4 8GB", 128, "PECAS");
+
+SELECT * FROM products
+WHERE id LIKE "%6";
+
+DELETE FROM users
+WHERE id = "u004";
+
+DELETE FROM products
+WHERE id = "p006";
+
+UPDATE users
+SET id = "u123"
+WHERE id = "u003";
+
+UPDATE products
+SET price = 200
+WHERE id = "p004";
+
+SELECT * FROM users
+ORDER BY email ASC;
+
+SELECT * FROM products
+LIMIT 20
+OFFSET 0;
+
+SELECT * FROM products
+WHERE price >= 100
+AND price <= 300
+ORDER BY price ASC;
