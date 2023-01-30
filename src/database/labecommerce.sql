@@ -87,3 +87,23 @@ VALUES("pu001", 200, 0, NULL, "u001"),
 SELECT * FROM purchases
 INNER JOIN users
 ON purchases.buyer_id = users.id;
+
+CREATE TABLE purchases_product(
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+INSERT INTO purchases_product ( purchase_id,product_id,quantity)
+VALUES ("pu001","p004",1),
+("pu002","p005",1),
+("pu003", "p004",2);
+
+
+SELECT * FROM purchases
+LEFT JOIN purchases_product
+ON purchases_product.purchase_id = purchases.id
+INNER JOIN products
+ON purchases_product.product_id = products.id;
