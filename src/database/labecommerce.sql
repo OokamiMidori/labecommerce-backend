@@ -3,7 +3,8 @@
 CREATE TABLE users (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    created_at TEXT DEFAULT (DATETIME()) NOT NULL
 );
 
 INSERT INTO users (id,email,password)
@@ -69,14 +70,16 @@ ORDER BY price ASC;
 
 CREATE TABLE purchases(
     id TEXT UNIQUE PRIMARY KEY NOT NULL,
+    buyer TEXT NOT NULL,
     total_price REAL NOT NULL,
+    created_at TEXT DEFAULT (DATETIME()) NOT NULL,
     paid INTEGER NOT NULL,
     delivered_at TEXT,
-    buyer_id TEXT NOT NULL,
-    FOREIGN KEY (buyer_id) REFERENCES users(id)
+    
+    FOREIGN KEY (buyer) REFERENCES users(id)
 );
 
-INSERT INTO purchases (id,total_price,paid,delivered_at,buyer_id)
+INSERT INTO purchases (id,total_price,paid,delivered_at,buyer)
 VALUES("pu001", 200, 0, NULL, "u001"),
 ("pu002", 1000, 0, NULL, "u001"),
 ("pu003", 400, 0, NULL, "u002"),
@@ -84,9 +87,11 @@ VALUES("pu001", 200, 0, NULL, "u001"),
 ("pu005", 800, 0, NULL, "u002"),
 ("pu006", 300, 0, NULL, "u123");
 
+SELECT * FROM purchases;
+
 SELECT * FROM purchases
 INNER JOIN users
-ON purchases.buyer_id = users.id;
+ON purchases.buyer = users.id;
 
 CREATE TABLE purchases_product(
     purchase_id TEXT NOT NULL,
